@@ -1,71 +1,188 @@
-<!doctype html>
+﻿
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Cowbucket by HunjaeJung</title>
+<head>
+	<link href="./design/main/favicon.ico" rel="shortcut icon"/>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Cow Bucket Challenge</title>
+	<style>
+		body{
+			background-color:#fff;
+			font-size:11pt;
+			font-family:dotum;
+			font-weight:bold;
+			margin:0px;
+			height:100%;
+			width:100%;
+		}
+		
+		.wrap{
+			display: table;
+			width:100%;
+			height:100%;
+		}
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Cowbucket</h1>
-        <p>SW Maestro 5th Hackertone</p>
+		.main_wrap{
+			display: table-cell;
+			position: relative;
+			right: 140px;
+			text-align: center;
+			vertical-align: middle;
+			height:100%;
+		}
 
-        <p class="view"><a href="https://github.com/HunjaeJung/cowbucket">View the Project on GitHub <small>HunjaeJung/cowbucket</small></a></p>
+		.main_contents{
+			height:560px;
+		    margin-left: auto;
+		    margin-right: auto; 
+			margin-top:40px;
+		}
 
+		.side_bar{
+			position:absolute;
+			display:inline-block;
+			background-color: #90d1d4;
+			width:280px;
+			right:0px;
+			top:0px;
+			left:auto;
+			height:100%;
+			text-align: center;
+		}
 
-        <ul>
-          <li><a href="https://github.com/HunjaeJung/cowbucket/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/HunjaeJung/cowbucket/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/HunjaeJung/cowbucket">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+		.center{
+			position: relative;
+			margin-right: auto;
+			margin-left: auto;
+		}
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+		.main_logo{
+			position: relative;
+			width:400px;
+			height:431px;
+			text-align: center;
+			background-image: url('./design/main/main_cow2.png');
+			background-repeat: no-repeat;
+			background-size: 90% 60%;
+			background-position: 50% 50%;
+			background-color:#fff8a3; 
+		}
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+		.btn{
+			width: 400px;
+			height: 50px;
+			cursor: pointer;
+			margin-top:10px;
+		}
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+		.start{
+			background-color: #90d1d4;
+		}
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+		.login{
+			background-color: #4969F0;
+		}
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+		.fb-join-image{
+			position: absolute;
+			margin-left: 22px;
+			margin-top: 13px;
+		}
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+		.fb-join-text{
+			position: absolute;
+			margin-top: 20px;
+			margin-left: 120px;
+			color: white;
+			font-size: 12px;
+		}
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+		.start_text{
+			position: relative;
+			top: 20px;
+			color: white;
+			font-size: 12px;
+			text-align: center;
+		}
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+		.title_bar{
+			position: relative;
+			width:210px;
+			height:42px;
+			text-align: center;
+			background-image: url('./design/main/main_ranking_title.png');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+			margin:auto;
+			margin-top:20px;
+		}
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+		.rank_icon{
+			position: relative;
+			width:230px;
+			height:75px;
+			text-align: center;
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+			margin:auto;
+			margin-top:20px;
+		}
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+		.main_title{
+			position: absolute;
+			width: 500px;
+			height: 50px;
+			top:20px;
+			background-image: url('./design/main/main_title.png');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+		}
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/HunjaeJung">HunjaeJung</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+	</style>
+	<script src="./scripts/jquery-1.4.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+				$('#start_btn').click(function(){
+					location.href="./game.html"
+				});
+
+				$('#login_btn').click(function(){
+						alert("반갑습니다. 최달수님!");
+				});
+		});	
+
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="main_title"></div>
+		<div class="main_wrap">
+			<div class="main_contents">
+				<div class="main_logo center"></div>
+				<div id="start_btn" class="start btn center">
+						<div class="start_text">Challenge Start</div>
+				</div>
+				<div class="login btn center" id="login_btn">
+					<a href="javascript:void(); return false;">
+						<div class="fb-join-image">
+							<img src="https://d3kif4no5sfwzt.cloudfront.net/assets/intro/intro_btn_fb-86680a3702eb0c41f5cf6412554e2360.png"/>
+						</div>
+						<div class="fb-join-text">페이스북으로 1초만에 가입</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="side_bar">
+			<div class="title_bar"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_1.png');"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_2.png');"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_3.png');"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_4.png');"></div>
+		</div>
+	</div>
+</body>
 </html>
