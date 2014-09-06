@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
 	<link href="./design/main/favicon.ico" rel="shortcut icon"/>
 	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -36,7 +36,7 @@
 
 		#dungstotal{position:absolute;font-weight:bold;font-size:12pt;color:#663333}
 		#gametable{position:absolute;background-color:#ffffff;border:1px solid #333333;
-			background-image: url('./background.jpg');
+			background-image: url('./design/game/images/background.jpg');
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
 			background-position: center;
@@ -118,19 +118,19 @@
 	var sunglasses = false;
 
   var gamedata = {
-	 	money1: { width : 20, height : 17, image : "game_coin1.png", money : 100 },
-		money2: { width : 20, height : 17, image : "game_coin2.png", money : 200 },
-		money3: { width : 20, height : 17, image : "game_coin3.png", money : 300 },
-		dung: { width : 20, height : 20, image : "game_cowddung.png" },
+	 	money1: { width : 20, height : 17, image : "./design/game/images/game_coin1.png", money : 100 },
+		money2: { width : 20, height : 17, image : "./design/game/images/game_coin2.png", money : 200 },
+		money3: { width : 20, height : 17, image : "./design/game/images/game_coin3.png", money : 300 },
+		dung: { width : 20, height : 20, image : "./design/game/images/game_cowddung.png" },
 
-		sick: { width : 20, height : 20, image : "game_cowsickness.png" },
-		loveyou : { width : 72, height : 58, image : "game_loveyou.png", money : 500 },
+		sick: { width : 20, height : 20, image : "./design/game/images/game_cowsickness.png" },
+		loveyou : { width : 72, height : 58, image : "./design/game/images/game_loveyou.png", money : 500 },
 
-		cheerup : { width : 72, height : 58, image : "game_cheerup.png", money : 700 },
-		typhoon : { width : 20, height : 17, image : "game_typhoon.png", money : -500 },
+		cheerup : { width : 72, height : 58, image : "./design/game/images/game_cheerup.png", money : 700 },
+		typhoon : { width : 20, height : 17, image : "./design/game/images/game_typhoon.png", money : -500 },
 
-		sintobuli : { width : 20, height : 17, image : "game_sintobuli.png", money : 1000 },
-		gujeyuk : { width : 20, height : 17, image : "game_gujeyuk.png", money : -1000 },
+		sintobuli : { width : 20, height : 17, image : "./design/game/images/game_sintobuli.png", money : 1000 },
+		gujeyuk : { width : 20, height : 17, image : "./design/game/images/game_gujeyuk.png", money : -1000 },
 
 
 		message: { width : 0, height : 0 }
@@ -510,30 +510,30 @@ if(dungstop > gametable_h - 100){
 	<!-- 캐릭터레이어 -->
 	<div id="character">
 
-		<img src="game_centercow_empty.png" id="empty_front"/>
-		<img src="game_centercow_little.png" id="little_front"/>
-		<img src="game_centercow_midium.png" id="midium_front"/>
-		<img src="game_centercow_much.png" id="much_front"/>
+		<img src="./design/game/images/game_centercow_empty.png" id="empty_front"/>
+		<img src="./design/game/images/game_centercow_little.png" id="little_front"/>
+		<img src="./design/game/images/game_centercow_midium.png" id="midium_front"/>
+		<img src="./design/game/images/game_centercow_much.png" id="much_front"/>
 
-		<img src="game_leftcow_empty.png" id="empty_left"/>
-		<img src="game_leftcow_little.png" id="little_left"/>
-		<img src="game_leftcow_midium.png" id="midium_left"/>
-		<img src="game_leftcow_much.png" id="much_left"/>
+		<img src="./design/game/images/game_leftcow_empty.png" id="empty_left"/>
+		<img src="./design/game/images/game_leftcow_little.png" id="little_left"/>
+		<img src="./design/game/images/game_leftcow_midium.png" id="midium_left"/>
+		<img src="./design/game/images/game_leftcow_much.png" id="much_left"/>
 
-		<img src="game_rightcow_empty.png" id="empty_right"/>
-		<img src="game_rightcow_little.png" id="little_right"/>
-		<img src="game_rightcow_midium.png" id="midium_right"/>
-		<img src="game_rightcow_much.png" id="much_right"/>
+		<img src="./design/game/images/game_rightcow_empty.png" id="empty_right"/>
+		<img src="./design/game/images/game_rightcow_little.png" id="little_right"/>
+		<img src="./design/game/images/game_rightcow_midium.png" id="midium_right"/>
+		<img src="./design/game/images/game_rightcow_much.png" id="much_right"/>
 
-		<img src="game_crying_leftcow_empty.png" id="empty_crying_left"/>
-		<img src="game_crying_leftcow_little.png" id="little_crying_left"/>
-		<img src="game_crying_leftcow_midium.png" id="midium_crying_left"/>
-		<img src="game_crying_leftcow_much.png" id="much_crying_left"/>
+		<img src="./design/game/images/game_crying_leftcow_empty.png" id="empty_crying_left"/>
+		<img src="./design/game/images/game_crying_leftcow_little.png" id="little_crying_left"/>
+		<img src="./design/game/images/game_crying_leftcow_midium.png" id="midium_crying_left"/>
+		<img src="./design/game/images/game_crying_leftcow_much.png" id="much_crying_left"/>
 
-		<img src="game_crying_rightcow_empty.png" id="empty_crying_right"/>
-		<img src="game_crying_rightcow_little.png" id="little_crying_right"/>
-		<img src="game_crying_rightcow_midium.png" id="midium_crying_right"/>
-		<img src="game_crying_rightcow_much.png" id="much_crying_right"/>
+		<img src="./design/game/images/game_crying_rightcow_empty.png" id="empty_crying_right"/>
+		<img src="./design/game/images/game_crying_rightcow_little.png" id="little_crying_right"/>
+		<img src="./design/game/images/game_crying_rightcow_midium.png" id="midium_crying_right"/>
+		<img src="./design/game/images/game_crying_rightcow_much.png" id="much_crying_right"/>
 
 	</div>
 
