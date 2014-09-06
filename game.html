@@ -1,0 +1,581 @@
+﻿<html>
+<head>
+	<link href="./design/main/favicon.ico" rel="shortcut icon"/>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+ 	<title>Cow Bucket</title>
+	<style>
+        @import url(http://fonts.googleapis.com/earlyaccess/Nanum Pen Script.css); /*--------------------------추가--------------------------*/
+        body {
+            background-color: #e5e5e5;
+            font-size: 11pt;
+            font-family: 'Nanum Pen Script', sans-serif; /*--------------------------추가--------------------------*/
+            font-weight: bold;
+        }
+
+        .adv_div{
+        	position: absolute;
+        	bottom:10px;
+        	z-index: -1;
+        	color:#c2c2c2;
+        }
+		.dung {position:absolute;font-size:1pt;}
+		.money1 {position:absolute;font-size:1pt;}
+		.money2 {position:absolute;font-size:1pt;}
+
+		.money3 {position:absolute;font-size:1pt;}
+		.sick {position:absolute;font-size:1pt;}
+		.cheerup {position:absolute;font-size:1pt;}
+		.typhoon {position:absolute;font-size:1pt;}
+		.gujeyuk {position:absolute;font-size:1pt;}
+		.sintobuli {position:absolute;font-size:1pt;}
+		#gametable {top:0px;left:0px; width:960px; height:600px}
+		#msg{position:absolute;text-align:center;font-size:9pt;font-family:dotum;color:#663333;font-weight:bold;}
+		#msgStep1{padding-top:150px}
+		#msgStep2{padding-top:205px}
+		#msgStep3{padding-top:205px}
+
+		#dungstotal{position:absolute;font-weight:bold;font-size:12pt;color:#663333}
+		#gametable{position:absolute;background-color:#ffffff;border:1px solid #333333;
+			background-image: url('./background.jpg');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+		}
+		#character{position:absolute;}
+
+		.money_div{
+			text-align: right;
+			position: absolute;
+			right:30px;
+			top:30px;
+			font-size: 40px;
+		}
+
+        /* modal dialog 부분(팝업) */
+
+
+        #msgStep4:target {
+            opacity: 1;
+            z-index: 9999;
+        }
+
+        #msgStep4 > div {
+            width: 600px;
+            position: relative;
+            margin: 15%; /*center arrangement*/
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: -moz-linear-gradient(white, #999);
+            background: -webkit-linear-gradient(white, #999);
+            background: -o-linear-gradient(white, #999);
+            background: #f9ebeb;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .re-start > a {
+            font-size: 2em;
+            text-align: center;
+            float: left;
+            height: 50px;
+            line-height: 50px;
+            width: 150px;
+            background-color: green;
+            color: white;
+            border: 1px solid white;
+            border-radius: 20px;
+            position: absolute;
+            left: 100px;
+            font-family: 'Nanum Pen Script', sans-serif;
+        }
+
+        .go-home > a {
+            font-size: 2em;
+            text-align: center;
+            float: right;
+            height: 50px;
+            line-height: 50px;
+            width: 150px;
+            background-color: green;
+            color: white;
+            border: 1px solid white;
+            border-radius: 20px;
+            position: absolute;
+            right: 100px;
+            font-family: 'Nanum Pen Script', sans-serif;
+        }
+	</style>
+
+	<script src="scripts/jquery-1.4.js"></script>
+
+	<script>
+ 	var character_w=85;
+	var character_h=118;
+
+	var reverseKey = false;
+	var sunglasses = false;
+
+  var gamedata = {
+	 	money1: { width : 20, height : 17, image : "game_coin1.png", money : 100 },
+		money2: { width : 20, height : 17, image : "game_coin2.png", money : 200 },
+		money3: { width : 20, height : 17, image : "game_coin3.png", money : 300 },
+		dung: { width : 20, height : 20, image : "game_cowddung.png" },
+
+		sick: { width : 20, height : 20, image : "game_cowsickness.png" },
+		loveyou : { width : 72, height : 58, image : "game_loveyou.png", money : 500 },
+
+		cheerup : { width : 72, height : 58, image : "game_cheerup.png", money : 700 },
+		typhoon : { width : 20, height : 17, image : "game_typhoon.png", money : -500 },
+
+		sintobuli : { width : 20, height : 17, image : "game_sintobuli.png", money : 1000 },
+		gujeyuk : { width : 20, height : 17, image : "game_gujeyuk.png", money : -1000 },
+
+
+		message: { width : 0, height : 0 }
+	};
+	var money_range_data = [{ name : "empty" }, { name : "little"}, { name : "midium"}, { name : "much"}];
+	var money_range = money_range_data[0]['name'];
+	//캐릭터이동
+	var charMoveTime=20;
+	var charMoveWidth=0;//이동량
+	var charMoveAddspeed=0.5;//이동량 증가량
+
+	//덩 만드는 시간
+	var dungsMakeTime=100;
+
+	//덩 내려오는 속도
+	var dunsDropTime=50;
+
+ 	var movingLeft=false;
+	var movingRight=false;
+	var gameOver=false;
+	var pageStep=1;
+	var start_x = 0;
+	var start_y = 0;
+	var gametable_w = 960;
+	var gametable_h = 600;
+	var sick = false;
+	var money = 0;
+	//임시값
+	tmp_charMoveWidth=charMoveWidth;
+
+	function main(){
+		pageview(1);
+		setGame();
+	}
+
+	function setGame(){
+		setGametable();
+		setCharacter();
+		showCharacterImg("front");
+
+
+	}
+
+	function addMoney(addmoney)
+	{
+		money += addmoney
+
+		if (money < 0)
+			money = 0;
+
+		if (money > 20)
+			money_range = money_range_data[1]['name'];
+		if (money > 50)
+			money_range = money_range_data[2]['name'];
+		if (money > 100)
+			money_range = money_range_data[3]['name'];
+
+		$("#money_display").text("총 "+money+"");
+		//alert(addmoney)
+		if(addmoney<0){
+			$("#item_display").css({"color":"red"});
+			$("#item_display").text(addmoney+"원");
+		}else{
+			$("#item_display").css({"color":"blue"});
+			$("#item_display").text("+"+addmoney+"원");
+		}
+	}
+
+	function setGametable(){
+		msg.style.left=start_x;
+		msg.style.top=start_y;
+		msg.style.width=gametable_w;
+	}
+
+	function setCharacter(){
+		character.style.width=character_w;
+		character.style.height=character_h;
+
+		character.style.left=start_x+((gametable_w-character_w)/2);
+		character.style.top=start_y+gametable_h-200;
+	}
+
+	function keydown(num){
+		if(pageStep==1){ //첫화면일때
+			if(num==32){
+				gamestart();
+				pageview(2);
+				setTimeout("msgStep2.style.display='none'",1000);
+			}
+		}
+		else if(pageStep==3){ //죽었을때
+			if(num==32){
+			    pageview(4);/*--------------------------추가--------------------------*/
+			}
+		}
+		else if(gameOver){ //게임오버시
+			if(num==32){
+				gamestart();
+			}
+		}
+		else{ //게임중
+			if(num==37 && movingLeft==false){
+					if(sick){movingRight=true;
+					movingLeft=false;
+					tmp_charMoveWidth=charMoveWidth;
+					moveRight(tmp_charMoveWidth);
+					showCharacterImg("right");
+					}else{
+					movingLeft=true;
+					movingRight=false;
+					tmp_charMoveWidth=charMoveWidth;
+					moveLeft(tmp_charMoveWidth);
+					showCharacterImg("left");
+				}
+			}
+			else if(num==39 && movingRight==false){
+					if(sick){
+					movingLeft=true;
+					movingRight=false;
+					tmp_charMoveWidth=charMoveWidth;
+					moveLeft(tmp_charMoveWidth);
+					showCharacterImg("left");
+					}else{
+						movingRight=true;
+					movingLeft=false;
+					tmp_charMoveWidth=charMoveWidth;
+					moveRight(tmp_charMoveWidth);
+					showCharacterImg("right");
+
+					}
+			}
+		}
+	}
+
+	function moveLeft(s){
+ 		if(movingLeft){
+			var charleft=character.style.left.substr(0,character.style.left.length-2)-0;
+
+			if(charleft-start_x < tmp_charMoveWidth){
+				movingLeft=false;
+				character.style.left=start_x;
+			}
+			else{
+				tmp_charMoveWidth=tmp_charMoveWidth+charMoveAddspeed;
+				character.style.left=charleft-tmp_charMoveWidth;
+				setTimeout(moveLeft,charMoveTime);
+			}
+		}
+	}
+
+	function moveRight(s){
+ 		if(movingRight){
+			var charleft=character.style.left.substr(0,character.style.left.length-2)-0;
+
+			if((start_x+gametable_w)-(charleft+character_w)<tmp_charMoveWidth){
+				movingRight = false;
+				character.style.left = start_x + gametable_w - character_w;
+			}
+			else{
+				tmp_charMoveWidth=tmp_charMoveWidth+charMoveAddspeed;
+				character.style.left=charleft+tmp_charMoveWidth;
+				setTimeout(moveRight,charMoveTime);
+			}
+		}
+	}
+
+	function keyup(num){
+		if(num==37){
+				movingLeft=false;movingRight=false;
+}
+		else if(num==39)
+{				movingRight=false;movingLeft=false;
+}
+
+		if(movingLeft) showCharacterImg("left");
+		else if(movingRight) showCharacterImg("right");
+	//	else if(gameOver) showCharacterImg("crying_left");
+		else showCharacterImg("front");
+	}
+
+	function gamestart(){
+		gameOver=false;
+		setGame();
+		gametable.innerHTML="";
+ 		makedungs(0);
+	}
+
+	function pageview(step){
+		pageStep=step;
+
+		msgStep1.style.display='none';
+		msgStep2.style.display='none';
+		msgStep3.style.display='none';
+		msgStep4.style.display = 'none';/*--------------------------추가--------------------------*/
+
+		if(step==1){
+			msgStep1.style.display='';
+ 			character.style.display='none';
+			gametable.innerHTML="";
+		}
+		if(step==2){
+			msgStep2.style.display='';
+ 			character.style.display='';
+		}
+		if(step==3){
+			msgStep3.style.display='';
+		}
+		if (step == 4) {/*--------------------------추가--------------------------*/
+		    msgStep4.style.display = '';
+		    $("#total_money").text(money);
+
+		}
+	}
+
+	function makedungs(objectno){
+
+		if(!gameOver){
+			var rand = Math.floor(Math.random() * 9);
+			var src = ""
+			var type = ""
+			// 0번은 똥
+			if(rand==0){
+				type = 'money1'
+			}else if (rand==1)
+				{
+					type = 'money2'
+				}else if (rand==2)
+					{
+						type = 'money3'
+					}else if (rand==3)
+						{
+							type = 'dung'
+						}else if (rand==4)
+							{
+								type = 'sick'
+							}else if (rand==5)
+								{
+									type = 'cheerup'
+								}else if (rand==6)
+									{
+										type = 'typhoon'
+									}else if (rand==7)
+										{
+											type = 'sintobuli'
+										}else if (rand==8)
+											{
+												type = 'gujeyuk'
+											}
+
+
+
+			src = "<div id='object_" + objectno + "' style='left:" + Math.floor(Math.random() * (gametable_w - gamedata[type]['width'])) + "px;' class='" + type +"'>"
+			src += "<img src='" + gamedata[type]['image'] + "' /></div>"
+
+ 			gametable.innerHTML += src;
+
+			drop_down("object_" + objectno, 0);
+			setTimeout("makedungs('" + (objectno-0 + 1) +"')", dungsMakeTime);
+
+		}
+	}
+	var c=0;
+	function drop_down(objectid, speed){
+		if(!gameOver){
+			var obj = document.getElementById(objectid);
+ 			var obj_data = gamedata[obj.className];
+
+			var dungstop=obj.style.top.substr(0,obj.style.top.length-2)-0;
+			var dungsleft=obj.style.left.substr(0,obj.style.left.length-2)-0;
+			var charactertop=character.style.top.substr(0,character.style.top.length-2)-0;
+			var characterleft=character.style.left.substr(0,character.style.left.length-2)-0;
+if(dungstop > gametable_h - 100){
+	gametable.removeChild(obj);
+	return
+}
+
+			/* 충돌체크 시작 */
+			if(dungstop+start_y + 5>charactertop - obj_data['height'] && dungstop + start_y < charactertop+character_h){
+				if(dungsleft+start_x - 15>characterleft - obj_data['width'] && dungsleft + start_x < characterleft+character_w){
+					if (obj.className == "dung")
+					{
+											if (movingLeft)
+											{showCharacterImg("crying_left");}
+											else// if (movingRight)
+												{showCharacterImg("crying_right");}
+
+						gameOver=true;
+						sick = false
+						movingRight=false;
+						movingLeft=false;
+						pageview(4);
+						gametable.removeChild(obj);
+
+						return false;
+
+					}
+					else if(obj.className == "money1" || obj.className == "money2" || obj.className == "money3")
+					{
+						addMoney(obj_data['money']);
+						gametable.removeChild(obj);
+						return false;
+					}else if(obj.className == "sick")
+						{
+							sick = !sick
+							gametable.removeChild(obj);
+							return false;
+
+						}else if(obj.className == "typhoon" || obj.className == "gujeyuk")
+							{
+								addMoney(obj_data['money']);
+								gametable.removeChild(obj);
+								return false;
+
+							}else if(obj.className == "loveyou" || obj.className == "cheerup" || obj.className == "sintobuli")
+								{
+									addMoney(obj_data['money']);
+									gametable.removeChild(obj);
+									return false;
+
+								}
+ 				}
+			}
+			/* 충돌체크 종료 */
+
+			obj.style.top = dungstop + speed;
+
+			if(dungstop <= gametable_h){
+				if(speed < 20) speed = speed + 1;
+				setTimeout("drop_down('" + objectid + "'," + speed + ")", dunsDropTime);
+			}
+			else
+			{
+				gametable.removeChild(obj);
+			}
+		}
+	}
+	function showCharacterImg(id){
+		if (gameOver)
+			return
+  		empty_front.style.display = 'none';
+			little_front.style.display = 'none';
+			midium_front.style.display = 'none';
+			much_front.style.display = 'none';
+
+			empty_left.style.display = 'none';
+			little_left.style.display = 'none';
+			midium_left.style.display = 'none';
+			much_left.style.display = 'none';
+
+			empty_right.style.display = 'none';
+			little_right.style.display = 'none';
+			midium_right.style.display = 'none';
+			much_right.style.display = 'none';
+
+			empty_crying_left.style.display = 'none';
+			little_crying_left.style.display = 'none';
+			midium_crying_left.style.display = 'none';
+			much_crying_left.style.display = 'none';
+			empty_crying_right.style.display = 'none';
+			little_crying_right.style.display = 'none';
+			midium_crying_right.style.display = 'none';
+			much_crying_right.style.display = 'none';
+
+			var element = document.getElementById(money_range + "_" + id)
+ character_w=element.width-0;
+ character_h=element.height-0;
+
+
+ element.style.display = '';
+	}
+	</script>
+</head>
+<body onload="main()" onkeydown="keydown(event.keyCode);" onkeyup="keyup(event.keyCode)">
+	<!-- 게임테이블 -->
+	<div id="gametable"></div>
+
+	<!-- 캐릭터레이어 -->
+	<div id="character">
+
+		<img src="game_centercow_empty.png" id="empty_front"/>
+		<img src="game_centercow_little.png" id="little_front"/>
+		<img src="game_centercow_midium.png" id="midium_front"/>
+		<img src="game_centercow_much.png" id="much_front"/>
+
+		<img src="game_leftcow_empty.png" id="empty_left"/>
+		<img src="game_leftcow_little.png" id="little_left"/>
+		<img src="game_leftcow_midium.png" id="midium_left"/>
+		<img src="game_leftcow_much.png" id="much_left"/>
+
+		<img src="game_rightcow_empty.png" id="empty_right"/>
+		<img src="game_rightcow_little.png" id="little_right"/>
+		<img src="game_rightcow_midium.png" id="midium_right"/>
+		<img src="game_rightcow_much.png" id="much_right"/>
+
+		<img src="game_crying_leftcow_empty.png" id="empty_crying_left"/>
+		<img src="game_crying_leftcow_little.png" id="little_crying_left"/>
+		<img src="game_crying_leftcow_midium.png" id="midium_crying_left"/>
+		<img src="game_crying_leftcow_much.png" id="much_crying_left"/>
+
+		<img src="game_crying_rightcow_empty.png" id="empty_crying_right"/>
+		<img src="game_crying_rightcow_little.png" id="little_crying_right"/>
+		<img src="game_crying_rightcow_midium.png" id="midium_crying_right"/>
+		<img src="game_crying_rightcow_much.png" id="much_crying_right"/>
+
+	</div>
+
+	<!-- 메시지 레이어 시작-->
+	<div id="msg">
+		<!-- Step1 : 인사말 -->
+
+		<div style="text-color:#ffffff" id="msgStep1">
+			<h2>소통</h2><BLINK>(시작하려면 스페이스바를 누르세요)</BLINK>
+		</div>
+
+		<!-- Step2 : Ready -->
+		<div style='font-color:#ffffff' id="msgStep2">R E A D Y ?</div>
+
+		<!-- Step3 : Dead -->
+		<div id="msgStep3">D E A D</div>
+	</div>
+
+	<div class="money_div">
+		<div id="money_display" class="money_display">총 0원 </div>
+		<div id="item_display" class="item_display"></div>
+	</div>
+	<div class="adv_div">
+		광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고광고
+
+	</div>
+	<!-- 메시지 레이어 끝-->
+    <!----------------------------추가---------------------------->
+    <div id="msgStep4">
+        <div style='margin:10%; '>
+            <div style="text-align: center; height:250px; line-height: 250px; font-family: 'Nanum Pen Script', sans-serif; font-size:2em; ">
+                <div style="height:30px;"></div>
+                <img src=".\design\game\game_gameover.png" style="height:170px; width:150px;"/>
+            	총 적립금 <div style="display:inline-block" id="total_money">0</div>원
+            </div>
+            <div style="height:50px; line-height:50px; overflow:hidden; position:relative;">
+                <div class="re-start"><a href="game.html">다시하기</a></div>
+                <div class="go-home"><a href="index.html">처음으로</a></div>
+            </div>
+            <div style="height:30px;"></div>
+        </div>
+
+    </div>
+</body>
+</html>

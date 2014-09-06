@@ -1,0 +1,188 @@
+﻿
+<html>
+<head>
+	<link href="./design/main/favicon.ico" rel="shortcut icon"/>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Cow Bucket Challenge</title>
+	<style>
+		body{
+			background-color:#fff;
+			font-size:11pt;
+			font-family:dotum;
+			font-weight:bold;
+			margin:0px;
+			height:100%;
+			width:100%;
+		}
+		
+		.wrap{
+			display: table;
+			width:100%;
+			height:100%;
+		}
+
+		.main_wrap{
+			display: table-cell;
+			position: relative;
+			right: 140px;
+			text-align: center;
+			vertical-align: middle;
+			height:100%;
+		}
+
+		.main_contents{
+			height:560px;
+		    margin-left: auto;
+		    margin-right: auto; 
+			margin-top:40px;
+		}
+
+		.side_bar{
+			position:absolute;
+			display:inline-block;
+			background-color: #90d1d4;
+			width:280px;
+			right:0px;
+			top:0px;
+			left:auto;
+			height:100%;
+			text-align: center;
+		}
+
+		.center{
+			position: relative;
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+		.main_logo{
+			position: relative;
+			width:400px;
+			height:431px;
+			text-align: center;
+			background-image: url('./design/main/main_cow2.png');
+			background-repeat: no-repeat;
+			background-size: 90% 60%;
+			background-position: 50% 50%;
+			background-color:#fff8a3; 
+		}
+
+		.btn{
+			width: 400px;
+			height: 50px;
+			cursor: pointer;
+			margin-top:10px;
+		}
+
+		.start{
+			background-color: #90d1d4;
+		}
+
+		.login{
+			background-color: #4969F0;
+		}
+
+		.fb-join-image{
+			position: absolute;
+			margin-left: 22px;
+			margin-top: 13px;
+		}
+
+		.fb-join-text{
+			position: absolute;
+			margin-top: 20px;
+			margin-left: 120px;
+			color: white;
+			font-size: 12px;
+		}
+
+		.start_text{
+			position: relative;
+			top: 20px;
+			color: white;
+			font-size: 12px;
+			text-align: center;
+		}
+
+		.title_bar{
+			position: relative;
+			width:210px;
+			height:42px;
+			text-align: center;
+			background-image: url('./design/main/main_ranking_title.png');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+			margin:auto;
+			margin-top:20px;
+		}
+
+		.rank_icon{
+			position: relative;
+			width:230px;
+			height:75px;
+			text-align: center;
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+			margin:auto;
+			margin-top:20px;
+		}
+
+		.main_title{
+			position: absolute;
+			width: 500px;
+			height: 50px;
+			top:20px;
+			background-image: url('./design/main/main_title.png');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			background-position: center;
+		}
+
+	</style>
+	<script src="./scripts/jquery-1.4.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+				$('#start_btn').click(function(){
+					location.href="./game.html"
+				});
+
+				$('#login_btn').click(function(){
+						alert("반갑습니다. 최달수님!");
+				});
+		});	
+
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="main_title"></div>
+		<div class="main_wrap">
+			<div class="main_contents">
+				<div class="main_logo center"></div>
+				<div id="start_btn" class="start btn center">
+						<div class="start_text">Challenge Start</div>
+				</div>
+				<div class="login btn center" id="login_btn">
+					<a href="javascript:void(); return false;">
+						<div class="fb-join-image">
+							<img src="https://d3kif4no5sfwzt.cloudfront.net/assets/intro/intro_btn_fb-86680a3702eb0c41f5cf6412554e2360.png"/>
+						</div>
+						<div class="fb-join-text">페이스북으로 1초만에 가입</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="side_bar">
+			<div class="title_bar"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_1.png');"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_2.png');"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_3.png');"></div>
+			<div class="rank_icon" style="background-image: url('./design/main/main_ranking_4.png');"></div>
+		</div>
+	</div>
+</body>
+</html>
